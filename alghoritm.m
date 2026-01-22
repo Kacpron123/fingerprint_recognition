@@ -67,6 +67,19 @@ if ~isempty(bifs_c)
 end
 hold off;
 
+% vector signature
+K_neighbors = 3;
+minutiae_signatures = computeVectorSignatures(terms_c, bifs_c, theta_map, K_neighbors);
+
+fprintf('Vector signatures extracted for %d minutiae.\n', length(minutiae_signatures));
+
+if ~isempty(minutiae_signatures)
+    disp('Sample Vector Signature (Neighbor: Dist, Rel_Orient, Radial_Angle, Type):');
+    disp(minutiae_signatures(1).neighbors);
+end
+
+
+
 
 
 
