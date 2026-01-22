@@ -39,6 +39,39 @@ I_skel = bwmorph(I_skel, 'spur', 5);
 I_skel(~mask)=0;
 
 
+
+
+
+
+
+
+
+
+% minutiae extraction
+[terms, bifs] = extractMinutiae(I_skel, mask);
+
+% post-processing
+D = 6; % distance threshold
+[terms_c, bifs_c] = removeFalseMinutiae(terms, bifs, D);
+
+
+figure('Name','Minutiae Extraction','NumberTitle','off');
+imshow(I_skel); hold on;
+title('Extracted Minutiae (Red: Terminations, Blue: Bifurcations)');
+
+if ~isempty(terms_c)
+    plot(terms_c(:,2), terms_c(:,1), 'ro', 'MarkerSize', 5, 'LineWidth', 1);
+end
+if ~isempty(bifs_c)
+    plot(bifs_c(:,2), bifs_c(:,1), 'bs', 'MarkerSize', 5, 'LineWidth', 1);
+end
+hold off;
+
+
+
+
+
+
 % --------------------------
 % Display all images in one figure
 figure('Name','Fingerprint Processing Stages','NumberTitle','off');
