@@ -49,30 +49,30 @@ function [signatures, terms, bifs, mask] = processFingerprint(I_origin)
     [terms_raw, bifs_raw] = extractMinutiae(I_skel, mask);
     [terms, bifs] = removeFalseMinutiae(terms_raw, bifs_raw, 9, eroded_mask);
 
-    figure('Name', 'Before and after removing false minutiae', 'NumberTitle', 'off', 'Position', [100, 100, 1200, 500]);
-
-    subplot(1, 2, 1);
-    imshow(I_skel); hold on;
-    title(['Before  (All: ', num2str(size(terms_raw,1) + size(bifs_raw,1)), ')']);
-    if ~isempty(terms_raw)
-        plot(terms_raw(:,2), terms_raw(:,1), 'ro', 'MarkerSize', 4); 
+    if visConfig()
+        figure('Name', 'Before and after removing false minutiae', 'NumberTitle', 'off', 'Position', [100, 100, 1200, 500]);
+        subplot(1, 2, 1);
+        imshow(I_skel); hold on;
+        title(['Before  (All: ', num2str(size(terms_raw,1) + size(bifs_raw,1)), ')']);
+        if ~isempty(terms_raw)
+            plot(terms_raw(:,2), terms_raw(:,1), 'ro', 'MarkerSize', 4); 
+        end
+        if ~isempty(bifs_raw)
+            plot(bifs_raw(:,2), bifs_raw(:,1), 'bs', 'MarkerSize', 4);
+        end
+        hold off;
+        
+        subplot(1, 2, 2);
+        imshow(I_skel); hold on;
+        title(['After (All: ', num2str(size(terms,1) + size(bifs,1)), ')']);
+        if ~isempty(terms)
+            plot(terms(:,2), terms(:,1), 'ro', 'MarkerSize', 5, 'LineWidth', 1);
+        end
+        if ~isempty(bifs)
+            plot(bifs(:,2), bifs(:,1), 'bs', 'MarkerSize', 5, 'LineWidth', 1);
+        end
+        hold off;
     end
-    if ~isempty(bifs_raw)
-        plot(bifs_raw(:,2), bifs_raw(:,1), 'bs', 'MarkerSize', 4);
-    end
-    hold off;
-    
-    subplot(1, 2, 2);
-    imshow(I_skel); hold on;
-    title(['After (All: ', num2str(size(terms,1) + size(bifs,1)), ')']);
-    if ~isempty(terms)
-        plot(terms(:,2), terms(:,1), 'ro', 'MarkerSize', 5, 'LineWidth', 1);
-    end
-    if ~isempty(bifs)
-        plot(bifs(:,2), bifs(:,1), 'bs', 'MarkerSize', 5, 'LineWidth', 1);
-    end
-    hold off;
-
     
     signatures = computeVectorSignatures(terms, bifs, theta_map, 3);
 end
