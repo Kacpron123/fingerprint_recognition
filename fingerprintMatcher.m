@@ -1,4 +1,7 @@
 clc; clear all; close all;
+projectFolder = pwd;
+functionsFolder = fullfile(projectFolder, 'functions');
+addpath(genpath(functionsFolder));
 
 
 img1 = imread(fullfile("Dataset","102_6.tif"));

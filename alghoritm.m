@@ -1,5 +1,11 @@
 clc;clear all;close all;
 visConfig(false); % visualization flag
+
+projectFolder = pwd;
+functionsFolder = fullfile(projectFolder, 'functions');
+addpath(genpath(functionsFolder));
+
+
 I_origin=imread(fullfile("Dataset","102_6.tif")); %change input for check
 I_origin=double(I_origin);
 
