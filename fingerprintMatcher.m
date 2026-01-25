@@ -1,8 +1,8 @@
 clc; clear all; close all;
 
 
-img1 = imread("Dataset\102_6.tif");
-img2 = imread("Dataset\102_7.tif");
+img1 = imread(fullfile("Dataset","102_6.tif"));
+img2 = imread(fullfile("Dataset","102_1.tif"));
 
 fprintf('Processing Fingerprint 1...\n');
 [sig1, terms1, bifs1, mask1] = processFingerprint(img1);
@@ -14,7 +14,7 @@ match_score = matchMinutiae(sig1, sig2);
 
 fprintf('Matching Score: %.2f%%\n', match_score);
 
-if match_score > 35 % threshold
+if match_score > 12 % threshold
     fprintf('Result: MATCH FOUND\n');
 else
     fprintf('Result: NO MATCH\n');

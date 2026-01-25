@@ -1,5 +1,5 @@
 clc;clear all;close all;
-I_origin=imread("Dataset\102_6.tif");
+I_origin=imread(fullfile("Dataset","102_6.tif"));
 I_origin=double(I_origin);
 
 if ndims(I_origin)==3
@@ -9,7 +9,7 @@ else
 end
 I_gray=double(I_gray);
 
-block_size=12; % block size
+block_size=16; % block size
 % normalization
 I_norm = normalizeImage(I_gray,128,110);
 % segmentation
@@ -49,10 +49,12 @@ I_skel(~mask)=0;
 
 % minutiae extraction
 [terms, bifs] = extractMinutiae(I_skel, mask);
-
+% Przygotowanie maski (Erozja, aby pozbyć się punktów brzegowych)
+se = strel('disk', 22);             % Zwiększyłem do 15 dla pewności
+eroded_mask = imerode(mask, se);
 % post-processing
-D = 6; % distance threshold
-[terms_c, bifs_c] = removeFalseMinutiae(terms, bifs, D);
+D = 9; % distance threshold
+[terms_c, bifs_c] = removeFalseMinutiae(terms, bifs, D, mask);
 
 
 figure('Name','Minutiae Extraction','NumberTitle','off');
